@@ -128,6 +128,18 @@ def add_equation(ax, equation, x, y):
               # Define as propriedades da seta que aponta para a equação
               arrowprops=dict(arrowstyle="->", color='black'))  
 
+# função para gerar o Gráfico 1 que é a Distância relativa 𝑑 entre o robô e a bola como função do tempo 𝑡
+# np.range, sendo usado para criar uma sequencia de tempo
+# O tempo é calculado de 0 até o comprimento da trajetória do robô multiplicado pelo intervalo de amostragem dt, com intervalo de tempo dt. o 0 passado como argumento é o ponto inicial da sequencia, o argumento seguinte é o ponto final (dt intervalo de tempo entre cada amostra de espaço percorrido, multiplicado pelo número de amostras de espaço percorrido pelo robô) e o dt é o espaçamento entre cada ponto.
+tempo = np.arange(0, len(trajetoria_robo) * dt, dt)
+
+#calculo da distância relativa entre o robô e a bola em cada ponto do tempo.
+#np.linalg.norm para calcula a norma euclidiana entre as coordenadas do robô e da bola.
+# Para isso, subtraí as coordenadas da trajetória do robô das coordenadas da trajetória da bola.
+# [:len(trajetoria_robo), 1:3] é utilizado para garantir que ambas as trajetórias tenham o mesmo comprimento.
+distancia_relativa = np.linalg.norm(
+    trajetoria_robo - trajetoria_bola[:len(trajetoria_robo), 1:3], axis=1)
+
 
 
 
