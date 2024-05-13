@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-import numpy 
+import numpy
 
 
 h_area = 1.0
@@ -82,3 +82,38 @@ for i in range(len(b_trajetoria)):
         (b_trajetoria[i, 2] - b_trajetoria[i - 1, 2]) / Intervalo_20ms  if i > 0 else 0.0
         ]
     )
+
+
+  # Tempo para interceptar os dois = Calcula o Módulo ( Distancia) dos pontos ( x , y ) da bola e robo /  Velocidade maxima 
+  tempo_para_interceptar = numpy.linalg.norm(b_trajetoria[i, 1:3] - rb_pos_atual) / velocidadeMaxima
+  # Consegue o ponto futuro ( Posição atual + velocidade atual + tempo_para_interceptar) 
+  ponto_intersecao = b_trajetoria[i, 1:3] + velocidade_bola * tempo_para_interceptar
+
+  # Calcula a direção para o ponto de interseção
+  direcao_intersecao = ponto_intersecao - rb_pos_atual
+  # Conseguindo um vetor unitario
+  direcao_intersecao /= numpy.linalg.norm(direcao_intersecao)
+
+
+  # Ajustando a velocidade pela quantidade de vetor unitario
+  velocidade_desejada = direcao_intersecao * velocidadeMaxima
+  # Ajusta o valor da aceleração
+  robo_aceleracao = (velocidade_desejada - robo_velocidade) / Intervalo_20ms
+
+  # Limita os valores de aceleração maxima e minima
+  robo_aceleracao = numpy.clip(robo_aceleracao, -aceleracaoMaxima, aceleracaoMaxima)
+
+  # Ajustando velocidade do robo
+  robo_velocidade +=  robo_aceleracao * Intervalo_20ms
+
+  # Limita os valores de velocidade maxima e minima
+  robo_velocidade = numpy.clip(robo_velocidade, -velocidadeMaxima, velocidadeMaxima)
+
+  # Atualiza a posição do robô
+  rb_pos_atual += robo_velocidade * Intervalo_20ms
+
+
+  # Verifica se o robô ( raio ) interceptou a bola < 8.0
+  if numpy.linalg.norm(rb_pos_atual - ponto_intersecao) < 8.0:
+    break
+
