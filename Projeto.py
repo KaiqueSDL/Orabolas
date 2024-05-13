@@ -116,3 +116,19 @@ for i in range(len(b_trajetoria)):
   # Verifica se o robô ( raio ) interceptou a bola < 8.0
   if numpy.linalg.norm(rb_pos_atual - ponto_intersecao) < 8.0:
     break
+
+# Função para adicionar a equação no gráfico, essa função será chamada, em outras partes receberá arguementos e gerará equações ao gráfico a partir dos arguementos que forem passados.
+def add_equation(ax, equation, x, y):
+  # Adiciona uma equação ao gráfico nas coordenadas (x, y)
+  ax.annotate(equation, (x, y),  
+              # Define a posição do texto da equação em relação às coordenadas especificadas
+              xytext=(10, -20),   
+              # Indica que as coordenadas do texto são medidas em pontos
+              textcoords='offset points',  
+              # Define as propriedades da seta que aponta para a equação
+              arrowprops=dict(arrowstyle="->", color='black'))  
+
+
+
+
+
