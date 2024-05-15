@@ -186,10 +186,36 @@ ax.plot(trajetoria_robo[:, 0],
         linestyle="--",
         color="orange",
         linewidth=2)
-# essa parte define o titulo d gráfico e as medidas nos eixos em metros
+# essa parte define o titulo do gráfico e as medidas nos eixos em metros
 ax.set_title("Trajetórias da Bola e do Robô no Plano XY até a Interceptação")
 ax.set_xlabel("Posição X (m)")
 ax.set_ylabel("Posição Y (m)")
+
+# Todo esse bloco de código adiciona texto aos gráficos para ajudar a visualizar no gráfico onde bola e robô começam e terminam suas trajetórias, os textos indica posição inicial e final da bola e do robô.
+ax.text(trajetoria_bola[0, 1], #coordenadas X inicial da bola
+        trajetoria_bola[0, 2], #coordenadas Y inicial da bola
+        'Inicial Bola', # texto que será exibido no gráfico
+        ha='right',
+        va='bottom')
+ax.text(trajetoria_robo[0, 0], #coordenadas X inicial do robô
+        trajetoria_robo[0, 1], #coordenadas X inicial do robô
+        'Inicial Robô', # texto que será exibido no gráfico
+        ha='right',
+        va='bottom')
+
+ax.text(trajetoria_bola[-1, 1], #coordenadas X final da bola
+        trajetoria_bola[-1, 2], #coordenadas Y final da bola
+        'Final Bola', # texto que será exibido no gráfico
+        ha='right',
+        va='bottom')
+ax.text(trajetoria_robo[-1, 0], #coordenadas X final do robô
+        trajetoria_robo[-1, 1], #coordenadas Y final da robô
+        'Final Robô', #texto que será exibido no gráfico
+        ha='right',
+        va='bottom')
+
+ax.legend() #adiciona uma legenda ao gráfico
+plt.show() #exibe o gráfico na tela
 
 
 
