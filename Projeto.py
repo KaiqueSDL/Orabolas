@@ -134,7 +134,7 @@ def add_equation(ax, equation, x, y):
 tempo = np.arange(0, len(trajetoria_robo) * dt, dt)
 
 #calculo da distância relativa entre o robô e a bola em cada ponto do tempo.
-#np.linalg.norm para calcula a norma euclidiana entre as coordenadas do robô e da bola.
+#np.linalg.norm para calcula o módulo entre as coordenadas do robô e da bola.
 # Para isso, subtraí as coordenadas da trajetória do robô das coordenadas da trajetória da bola.
 # [:len(trajetoria_robo), 1:3] é utilizado para garantir que ambas as trajetórias tenham o mesmo comprimento.
 distancia_relativa = np.linalg.norm(
