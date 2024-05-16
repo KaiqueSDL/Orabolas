@@ -117,7 +117,7 @@ for i in range(len(b_trajetoria)):
   if numpy.linalg.norm(rb_pos_atual - ponto_intersecao) < 8.0:
     break
 
-# Função para adicionar a equação no gráfico, essa função será chamada, em outras partes receberá arguementos e gerará equações ao gráfico a partir dos arguementos que forem passados.
+# Função para adicionar a equação no gráfico, essa função será chamada, em outras partes e receberá argumentos e gerará equações ao gráfico a partir dos argumentos que forem passados.
 def add_equation(ax, equation, x, y):
   # Adiciona uma equação ao gráfico nas coordenadas (x, y)
   ax.annotate(equation, (x, y),  
@@ -128,7 +128,7 @@ def add_equation(ax, equation, x, y):
               # Define as propriedades da seta que aponta para a equação
               arrowprops=dict(arrowstyle="->", color='black'))  
 
-# Bloco e código para gerar o Gráfico 1 que é a Distância relativa 𝑑 entre o robô e a bola como função do tempo 𝑡
+# Bloco de código para gerar o Gráfico 1 que é a Distância relativa 𝑑 entre o robô e a bola como função do tempo 𝑡
 # np.range, sendo usado para criar uma sequencia de tempo
 # O tempo é calculado de 0 até o comprimento da trajetória do robô multiplicado pelo intervalo de amostragem dt, com intervalo de tempo dt. o 0 passado como argumento é o ponto inicial da sequencia, o argumento seguinte é o ponto final (dt intervalo de tempo entre cada amostra de espaço percorrido, multiplicado pelo número de amostras de espaço percorrido pelo robô) e o dt é o espaçamento entre cada ponto.
 tempo = np.arange(0, len(trajetoria_robo) * dt, dt)
