@@ -400,32 +400,32 @@ fig, ax = plt.subplots(figsize=(10, 6)) #essa linha cria a figura, define os eix
 ax.plot(tempo,
         b_trajetoria[:len(trajetoria_robo), 0], #Plota a coordenada x da bola em função do tempo, são selecionadas as posições X da bola até o ponto onde o robô intercepta.
         #adiciona um rótulo para a legenda e suas configurações.
-        label="Bola (Posição X)",
-        color="blue",
+        label="Bola - Posição em X",
+        color="black",
         linewidth=2)
 ax.plot(tempo,
         b_trajetoria[:len(trajetoria_robo), 1], #Plota a coordenada y da bola em função do tempo, são selecionadas as posições y da bola até o ponto onde o robô intercepta.
         #adiciona um rótulo para a legenda e suas configurações.
-        label="Bola (Posição Y)",
-        color="green",
+        label="Bola - Posição em Y ",
+        color="red",
         linewidth=2)
 ax.plot(tempo, 
         trajetoria_robo[:, 0], #Plota a coordenada x do robô em função do tempo, são selecionadas as posições x do robô.
         #adiciona um rótulo para a legenda e suas configurações.
-        label="Robô (Posição X)",
+        label="Robô - Posição em X",
         linestyle="--",
-        color="orange",
+        color="black",
         linewidth=2)
 ax.plot(tempo,
         trajetoria_robo[:, 1], #Plota a coordenada y do robô em função do tempo, são selecionadas as posições y do robô.
         #adiciona um rótulo para a legenda e suas configurações.
-        label="Robô (Posição Y)",
+        label="Robô - Posição em Y",
         linestyle="--",
-        color="red",
+        color="pink",
         linewidth=2)
-ax.set_title("Coordenadas X e Y da Bola e do Robô em Função do Tempo") #define o titulo do gráfico
-ax.set_xlabel("Tempo (s)") #define o rótulo do eixo x
-ax.set_ylabel("Posição (m)") #define o rótulo do eixo y
+ax.set_title("Coordenadas X e Y do robô e da bola em Função do Tempo") #define o titulo do gráfico
+ax.set_xlabel("Tempo") #define o rótulo do eixo x
+ax.set_ylabel("Posição") #define o rótulo do eixo y
 
 # Esse bloco Adiciona equações aos gráficos, chamando uma função já criada e passando os parâmetros.
 add_equation(ax, r'$x_{\mathrm{bola}}$', 25, 3) #O 1º parametro define onde será adicionada a equação, o 2º a equação que será adicionada, que é a equação Xbola, e os parametros seguintes são as coordenadas x e y do gráfico onde a equação sera adicionada.
@@ -439,54 +439,54 @@ add_equation(ax, r'$y_{\mathrm{robo}}$', 25, 6) #O 1º parametro define onde ser
 #essa parte adiciona texto no gráfico, obtém os dados de tempo inicial e posição inicial da bola no eixo x, define o texto a ser exibido e sua posição.
 ax.text(tempo[0],
         b_trajetoria[0, 0],
-        'Inicial Bola (X)',
+        'Inicial Bola - no eixo X',
         ha='right',
         va='bottom')
 #essa parte adiciona texto no gráfico, obtém os dados de tempo inicial e posição inicial da bola no eixo Y, define o texto a ser exibido e sua posição.
 ax.text(tempo[0],
         b_trajetoria[0, 1],
-        'Inicial Bola (Y)',
+        'Inicial Bola - no eixo Y)',
         ha='right',
         va='bottom')
 #essa parte adiciona texto no gráfico, obtém os dados de tempo inicial e posição inicial da robô no eixo x, define o texto a ser exibido e sua posição.
 ax.text(tempo[0],
         trajetoria_robo[0, 0],
-        'Inicial Robô (X)',
+        'Inicial Robô - no eixo X',
         ha='right',
         va='bottom')
 
 #essa parte adiciona texto no gráfico, obtém os dados de tempo inicial e posição inicial da robô no eixo Y e define o texto a ser exibido e sua posição.
 ax.text(tempo[0],
         trajetoria_robo[0, 1],
-        'Inicial Robô (Y)',
+        'Inicial Robô - no eixo Y',
         ha='right',
         va='bottom')
 
 #essa parte adiciona texto no gráfico, obtém os dados de tempo final e posição final da bola no eixo x e define o texto a ser exibido e sua posição.
 ax.text(tempo[-1],
         b_trajetoria[-1, 0],
-        'Final Bola (X)',
+        'Final Bola - no eixo X',
         ha='right',
         va='bottom')
 
 #essa parte adiciona texto no gráfico, obtém os dados de tempo final e posição final da bola no eixo Y e define o texto a ser exibido e sua posição.
 ax.text(tempo[-1],
         b_trajetoria[-1, 1],
-        'Final Bola (Y)',
+        'Final Bola - no eixo Y',
         ha='right',
         va='bottom')
 
 #essa parte adiciona texto no gráfico, obtém os dados de tempo final e posição final do robô no eixo x e define o texto a ser exibido e sua posição.
 ax.text(tempo[-1],
         trajetoria_robo[-1, 0],
-        'Final Robô (X)',
+        'Final Robô - no eixo X',
         ha='right',
         va='bottom')
 
 #essa parte adiciona texto no gráfico, obtém os dados de tempo final e posição final do robô no eixo Y e define o texto a ser exibido e sua posição.
 ax.text(tempo[-1],
         trajetoria_robo[-1, 1],
-        'Final Robô (Y)',
+        'Final Robô - no eixo Y',
         ha='right',
         va='bottom')
 
@@ -502,7 +502,7 @@ plt.plot(tempo[:indice_interceptacao], #intervalo de tempo até o ponto de inter
          #rótulo para a legenda e suas configurações.
          label="Robô (ax)",
          linestyle="--",
-         color="orange",
+         color="blue",
          linewidth=2)
 
 #componente X da aceleração do robô
@@ -511,27 +511,27 @@ plt.plot(tempo[:indice_interceptacao],  #intervalo de tempo até o ponto de inte
          #rótulo para a legenda e suas configurações.
          label="Robô (ay)",
          linestyle="--",
-         color="red",
+         color="orange",
          linewidth=2)
 
 #componente X da aceleração da bola
 plt.plot(tempo[:indice_interceptacao], #intervalo de tempo até o ponto de interceptação
          bola_aceleracao_x[:indice_interceptacao], #valores X da aceleração da bola até o ponto de interceptação.
          #rótulo para a legenda e suas configurações.
-         label="Bola (ax)",
-         color="blue",
+         label="Bola (aceleração em x)",
+         color="pink",
          linewidth=2)
 #componente Y da aceleração da bola
 plt.plot(tempo[:indice_interceptacao],#intervalo de tempo até o ponto de interceptação
          bola_aceleracao_y[:indice_interceptacao], #valores Y da aceleração da bola até o ponto de interceptação
          #rótulo para a legenda e suas configurações.
-         label="Bola (ay)",
-         color="green",
+         label="Bola (aceleração em y)",
+         color="red",
          linewidth=2)
 plt.title(
-    "Componentes Ax e Ay da Aceleração da Bola e do Robô em Função do Tempo") #titulo do gráfico
-plt.xlabel("Tempo (s)") #rótulo do eixo X
-plt.ylabel("Aceleração (m/s²)") #rótulo do eixo Y
+    "Componentes da aceleração em x e aceleração em y da Bola e do Robô em Função do Tempo") #titulo do gráfico
+plt.xlabel("tempo") #rótulo do eixo X
+plt.ylabel("aceleração") #rótulo do eixo Y
 plt.legend()
 plt.show()
 
@@ -540,13 +540,13 @@ fig, ax = plt.subplots(figsize=(10, 6)) #cria a figura, o eixo e suas configura�
 ax.plot(tempo[:indice_interceptacao], #valores de tempo até o ponto de interceptação
         distancia_relativa[:indice_interceptacao], #distância entre o robô e a bola até o ponto de interceptação.
         #rótulo e cor
-        label="Distância Relativa",
-        color="red")
+        label="Distancia Relativa",
+        color="blue")
 ax.set_title(
-    "Distância Relativa entre o Robô e a Bola em Função do Tempo até a Interceptação" #titulo do gráfico
+    "Distância relativa entre o robo e a Bola em Função do Tempo até o ponto de Interceptação" #titulo do gráfico
 )
-ax.set_xlabel("Tempo (s)") #rótulo do eixo x
-ax.set_ylabel("Distância (m)") #rótulo do eixo Y
+ax.set_xlabel("Tempo") #rótulo do eixo x
+ax.set_ylabel("distancia") #rótulo do eixo Y
 
 #Essa parte Adiciona a equação no gráfico, e a posição onde será colocada, essa é a equação para calcular a distância entre o robô e a bola.
 add_equation(ax,r'$d = \sqrt{(x_{\mathrm{robo}} - x_{\mathrm{bola}})^2 + (y_{\mathrm{robo}} - y_{\mathrm{bola}})^2}$',5, 1)
@@ -570,34 +570,34 @@ plt.figure(figsize=(10, 6)) #configura o tamanho da figura do gráfico
 plt.plot(tempo[:indice_interceptacao], #representa os valores de tempo desde o início até o instante de interceptação.
          trajetoria_robo[:indice_interceptacao, 0], #representa a componente vx da velocidade do robô
          #rótulo e suas configurações
-         label="Robô (vx)",
+         label="Robô - velocidade em x",
          linestyle="--",
-         color="orange",
+         color="black",
          linewidth=2)
 plt.plot(tempo[:indice_interceptacao], #representa os valores de tempo desde o início até o instante de interceptação.
          trajetoria_robo[:indice_interceptacao, 1], #representa a componente vy da velocidade do robô.
          #rótulo e suas configurações
-         label="Robô (vy)",
+         label="Robô - velocidade em y",
          linestyle="--",
-         color="red",
+         color="blue",
          linewidth=2)
 plt.plot(tempo[:indice_interceptacao], #representa os valores de tempo desde o início até o instante de interceptação.
          b_trajetoria[:indice_interceptacao, 1] - 
          b_trajetoria[indice_interceptacao - 1, 1], #calcula a componente vx da velocidade da bola.
          #rótulo e suas configurações
-         label="Bola (vx)",
-         color="blue",
+         label="Bola - velocidade em x",
+         color="black",
          linewidth=2)
 plt.plot(tempo[:indice_interceptacao], #representa os valores de tempo desde o início até o instante de interceptação.
          b_trajetoria[:indice_interceptacao, 2] -
          b_trajetoria[indice_interceptacao - 1, 2], #calcula componente vy da velocidade da bola.
          #rótulo e suas configurações
-         label="Bola (vy)",
-         color="green",
+         label="Bola - velocidade em y",
+         color="pink",
          linewidth=2)
 plt.title(
-    "Componentes Vx e Vy da Velocidade da Bola e do Robô até a Interceptação") #adiciona o titulo do gráfico
-plt.xlabel("Tempo (s)") #rótulo do eixo X
-plt.ylabel("Velocidade (m/s)") #rótulo do eixo Y
+    "Componentes Velocidade em X e Velocidade em Y da Bola e do Robô até o ponto de Interceptação") #adiciona o titulo do gráfico
+plt.xlabel("Tempo") #rótulo do eixo X
+plt.ylabel("Velocidade") #rótulo do eixo Y
 plt.legend()
 plt.show()
