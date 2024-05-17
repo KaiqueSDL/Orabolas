@@ -124,7 +124,7 @@ for i in range(len(b_trajetoria)):
   # Converte a lista em uma matriz NumPy para facilitar a manipulação
 trajetoria_robo = numpy.array(trajetoria_robo)
 
-
+indice_interceptacao = numpy.argmin(numpy.linalg.norm(trajetoria_robo - b_trajetoria[:len(trajetoria_robo) , 1:3],axis=1))
 
 # -------------------------------------------------------------------------------------------------------------------------------
 
