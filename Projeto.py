@@ -128,6 +128,168 @@ indice_interceptacao = numpy.argmin(numpy.linalg.norm(trajetoria_robo - b_trajet
 
 # -------------------------------------------------------------------------------------------------------------------------------
 
+# Informações finais
+print("\nInformações sobre a Interceptação:")
+print(
+    f"Ponto de interceptação: ({ponto_intersecao[0]:.2f}, {ponto_intersecao[1]:.2f})"
+)
+print(f"Tempo de interceptação: {indice_interceptacao * dt:.2f} segundos")
+
+# Outras informações (personalize conforme necessário)
+print("Outras informações:")
+print(" - Tamanho do campo de futebol: 9.0 x 6.0 metros")
+print(" - Área do gol: 0.5 x 1.0 metros")
+print(" - Distância do penalti: 2.0 metros")
+print(" - Intervalo de amostragem: 20 ms")
+print(" - Aceleração máxima permitida: 2.5 m/s^2")
+print(" - Velocidade máxima permitida: 2.5 m/s")
+
+# Criação da figura e eixos para a animação
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.set_xlim(0, larguraCampo)
+ax.set_ylim(0, h_campo)
+ax.set_aspect('equal')
+ax.set_title("Animação da Interceptação do Robô")
+ax.set_xlabel("Posição X (m)")
+ax.set_ylabel("Posição Y (m)")
+
+# Adiciona o campo de futebol
+campo = plt.Rectangle((0, 0),
+                      larguraCampo,
+                      h_campo,
+                      linewidth=2,
+                      edgecolor='black',
+                      facecolor='green')
+ax.add_patch(campo)
+
+# Adiciona as linhas do campo
+linhas_campo = [
+    plt.Line2D([0, 0], [0, h_campo], linewidth=2, color='white'),
+    plt.Line2D([larguraCampo, larguraCampo], [0, h_campo],
+               linewidth=2,
+               color='white'),
+    plt.Line2D([0, larguraCampo], [0, 0], linewidth=2, color='white'),
+    plt.Line2D([0, larguraCampo], [h_campo, h_campo],
+               linewidth=2,
+               color='white'),
+    plt.Line2D([larguraCampo / 2, larguraCampo / 2], [0, h_campo],
+               linewidth=2,
+               linestyle='dashed',
+               color='white')
+]
+
+for linha in linhas_campo:
+  ax.add_line(linha)
+
+# Adiciona o campo de futebol
+campo = plt.Rectangle((0, 0),
+                      larguraCampo,
+                      h_campo,
+                      linewidth=2,
+                      edgecolor='black',
+                      facecolor='none')
+ax.add_patch(campo)
+
+# Adiciona a área do gol
+gol_esquerda = plt.Rectangle((0, (h_campo - h_area) / 2),
+                             0.2,
+                             h_area,
+                             linewidth=2,
+                             edgecolor='white',
+                             facecolor='none')
+gol_direita = plt.Rectangle(
+    (larguraCampo - 0.2, (h_campo - h_area) / 2),
+    0.2,
+    h_area,
+    linewidth=2,
+    edgecolor='white',
+    facecolor='none')
+ax.add_patch(gol_esquerda)
+ax.add_patch(gol_direita)
+
+# Adiciona a trajetória da bola
+trajetoria_bola_anim, = ax.plot([], [], 'b-', label="Bola", linewidth=4)
+
+# Adiciona a trajetória do robô
+trajetoria_robo_anim, = ax.plot([], [], 'r-', label="Robô", linewidth=4)
+
+# Adiciona a posição inicial do robô
+robo_anim = plt.Circle(
+    (robo_pos_inicial[0], robo_pos_inicial[1]),
+    0.01,
+)
+ax.add_patch(robo_anim)
+
+# Adiciona marcação para o ponto de interceptação
+ponto_interceptacao_anim, = ax.plot([], [],
+                                    'w*',
+                                    markersize=25,
+                                    label="Ponto de Intercepção")
+
+# Adiciona a legenda
+ax.legend()
+
+
+# Função de inicialização da animação
+def init():
+  trajetoria_bola_anim.set_data([], [])
+  trajetoria_robo_anim.set_data([], [])
+  robo_anim.center = (robo_pos_inicial[0], robo_pos_inicial[1])
+  ponto_interceptacao_anim.set_data([], [])
+
+  # Adiciona a informação sobre a interceptação
+  texto_interceptacao.set_text("")
+
+  return trajetoria_bola_anim, trajetoria_robo_anim, robo_anim, ponto_interceptacao_anim, texto_interceptacao
+
+
+# Função de atualização da animação
+def update(frame):
+  trajetoria_bola_anim.set_data(b_trajetoria[:frame, 1],
+                                b_trajetoria[:frame, 2])
+  trajetoria_robo_anim.set_data(trajetoria_robo[:frame, 0],
+                                trajetoria_robo[:frame, 1])
+  robo_anim.center = (rb_pos_atual[0], rb_pos_atual[1])
+
+  # Atualiza a posição do ponto de interceptação
+  ponto_interceptacao_anim.set_data([trajetoria_robo[indice_interceptacao, 0]],
+                                    [trajetoria_robo[indice_interceptacao, 1]])
+
+  # Atualiza a informação sobre a interceptação
+  texto_interceptacao.set_text(
+      f"Interceptação: t={frame*Intervalo_20ms:.2f}s\n"
+      f"Posição: ({trajetoria_robo[indice_interceptacao, 0]:.2f} m, {trajetoria_robo[indice_interceptacao, 1]:.2f} m)\n"
+      f"Velocidade : (X : {velocidades_robo[frame][0]:.2f} m/s, Y :  {velocidades_robo[frame][1]:.2f} m/s)\n"
+      f"Aceleração: (X : {aceleracoes_robo[frame][0]:.2f} m/s², Y :  {aceleracoes_robo[frame][1]:.2f} m/s²)\n\n"
+      f"Cálculos:\n"
+      f"Distância relativa (d) = {numpy.linalg.norm(rb_pos_atual - b_trajetoria[frame, 1:3]):.2f} m\n"
+      f"Direção da aceleração = ({(b_trajetoria[frame, 1] - rb_pos_atual[0])/numpy.linalg.norm(b_trajetoria[frame, 1:3] - rb_pos_atual):.2f}, {(b_trajetoria[frame, 2] - rb_pos_atual[1])/numpy.linalg.norm(b_trajetoria[frame, 1:3] - rb_pos_atual):.2f})\n"
+      f"Tempo para interceptação = {numpy.linalg.norm(b_trajetoria[frame, 1:3] - rb_pos_atual) / velocidadeMaxima:.2f} s"
+  )
+  return trajetoria_bola_anim, trajetoria_robo_anim, robo_anim, ponto_interceptacao_anim, texto_interceptacao
+
+
+# Adiciona o texto de interceptação no gráfico de animação
+texto_interceptacao = ax.text(0.5,
+                              0.9,
+                              '',
+                              transform=ax.transAxes,
+                              fontsize=10,
+                              verticalalignment='top')
+
+# Criação da animação
+ani = animation.FuncAnimation(fig,
+                              update,
+                              frames=len(trajetoria_robo),
+                              init_func=init,
+                              blit=True)
+
+# Exibição da animação
+plt.show()
+
+
+
+
 # --------------------------------------------------------- DESTAQUE ---------------------------------------------------------------------------------------------
 
 
