@@ -138,7 +138,7 @@ print(f"Tempo de interceptação: {indice_interceptacao * Intervalo_20ms:.2f} se
 # Outras informações (personalize conforme necessário)
 print("Outras informações:")
 print(" - Tamanho do campo de futebol: 9.0 x 6.0 metros")
-print(" - Área do gol: 0.5 x 1.0 metros")
+print(" - Área do gol: 0.5 x 1.0 metros") 
 print(" - Distância do penalti: 2.0 metros")
 print(" - Intervalo de amostragem: 20 ms")
 print(" - Aceleração máxima permitida: 2.8 m/s^2")
@@ -222,8 +222,8 @@ ax.add_patch(robo_anim)
 
 # Adiciona marcação para o ponto de interceptação
 ponto_interceptacao_anim, = ax.plot([], [],
-                                    'w*',
-                                    markersize=25,
+                                    'cD',
+                                    markersize=10,
                                     label="Ponto de Intercepção")
 
 # Adiciona a legenda
@@ -257,14 +257,7 @@ def update(frame):
 
   # Atualiza a informação sobre a interceptação
   texto_interceptacao.set_text(
-      f"Interceptação: t={frame*Intervalo_20ms:.2f}s\n"
-      f"Posição: ({trajetoria_robo[indice_interceptacao, 0]:.2f} m, {trajetoria_robo[indice_interceptacao, 1]:.2f} m)\n"
-      f"Velocidade : (X : {velocidades_robo[frame][0]:.2f} m/s, Y :  {velocidades_robo[frame][1]:.2f} m/s)\n"
-      f"Aceleração: (X : {aceleracoes_robo[frame][0]:.2f} m/s², Y :  {aceleracoes_robo[frame][1]:.2f} m/s²)\n\n"
-      f"Cálculos:\n"
-      f"Distância relativa (d) = {numpy.linalg.norm(rb_pos_atual - b_trajetoria[frame, 1:3]):.2f} m\n"
-      f"Direção da aceleração = ({(b_trajetoria[frame, 1] - rb_pos_atual[0])/numpy.linalg.norm(b_trajetoria[frame, 1:3] - rb_pos_atual):.2f}, {(b_trajetoria[frame, 2] - rb_pos_atual[1])/numpy.linalg.norm(b_trajetoria[frame, 1:3] - rb_pos_atual):.2f})\n"
-      f"Tempo para interceptação = {numpy.linalg.norm(b_trajetoria[frame, 1:3] - rb_pos_atual) / velocidadeMaxima:.2f} s"
+      f"Animação:\n"
   )
   return trajetoria_bola_anim, trajetoria_robo_anim, robo_anim, ponto_interceptacao_anim, texto_interceptacao
 
@@ -312,7 +305,7 @@ def add_equation(ax, equation, x, y):
 tempo = numpy.arange(0, len(trajetoria_robo) * Intervalo_20ms, Intervalo_20ms)
 
 #calculo da distância relativa entre o robô e a bola em cada ponto do tempo.
-#np.linalg.norm para calcula a norma euclidiana entre as coordenadas do robô e da bola.
+#np.linalg.norm para calcula modulo entre as coordenadas do robô e da bola.
 # Para isso, subtraí as coordenadas da trajetória do robô das coordenadas da trajetória da bola.
 # [:len(trajetoria_robo), 1:3] é utilizado para garantir que ambas as trajetórias tenham o mesmo comprimento.
 distancia_relativa = numpy.linalg.norm(
@@ -325,7 +318,7 @@ ax.set_xlabel("Tempo (s)") #rótulo do eixo
 ax.set_ylabel("Distância ") #rótulo do outro eixo
 
 # Esse bloco de código inteiro Adiciona uma equação no gráfico
-equacao1 = r'$d = \sqrt{(x_{\mathrm{robo}} - x_{\mathrm{bola}})^2 + (y_{\mathrm{robo}} - y_{\mathrm{bola}})^2}$' #Essa linha cria uma variável de equação1 e atribui a ela uma equação matemática que calcula a distância d entre robô e bola, distância entre 2 pontos em um plano bidimensional, essa fórmula é a distância euclidiana entre dois pontos. que é a raiz quadrada da soma dos quadrados da diferença entre x do robô e x da bola e y do rôbo e y da bola. e formatá o jeito que ela tem que ser visualizada.
+equacao1 = r'$d = \sqrt{(x_{\mathrm{robo}} - x_{\mathrm{bola}})^2 + (y_{\mathrm{robo}} - y_{\mathrm{bola}})^2}$' #Essa linha cria uma variável de equação1 e atribui a ela uma equação matemática que calcula a distância d entre robô e bola, distância entre 2 pontos em um plano bidimensional, essa fórmula é a distância entre dois pontos. que é a raiz quadrada da soma dos quadrados da diferença entre x do robô e x da bola e y do rôbo e y da bola. e formatá o jeito que ela tem que ser visualizada.
 #essa parte toda adiciona uma anotação, onde a equação ficará no gráfico, e define sua posição e outras configurações
 ax.annotate(equacao1, (0.30, 0.92), 
             xycoords='axes fraction',
